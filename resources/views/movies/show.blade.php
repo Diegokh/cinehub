@@ -4,6 +4,12 @@
 
 @section('content')
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <h1>{{ $movie->title }}</h1>
 
     <div class="card mt-4">
@@ -41,9 +47,25 @@
                 </p>
             @endif
 
-            <a href="/movies" class="btn btn-secondary">
-                Volver
-            </a>
+            <div class="d-flex gap-2 mt-4">
+                <a href="/movies" class="btn btn-secondary">
+                    Volver
+                </a>
+
+                <a href="/movies/{{ $movie->id }}/edit" class="btn btn-warning">
+                    Editar
+                </a>
+
+                <form action="/movies/{{ $movie->id }}"
+                      method="POST"
+                      onsubmit="return confirm('¿Seguro que quieres borrar esta película?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">
+                        Borrar
+                    </button>
+                </form>
+            </div>
 
         </div>
     </div>

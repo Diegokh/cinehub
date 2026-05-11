@@ -4,7 +4,17 @@
 
 @section('content')
 
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
 <h1 class="mb-4">Películas</h1>
+
+<a href="/movies/create" class="btn btn-success mb-3">
+    + Añadir película
+</a>
 
 <div class="list-group">
 

@@ -17,6 +17,19 @@
 
             <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="/movies">Películas</a>
+
+                @auth
+                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                    <a class="nav-link" href="{{ route('profile.edit') }}">{{ Auth::user()->name }}</a>
+
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="nav-link btn btn-link">Salir</button>
+                    </form>
+                @else
+                    <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    <a class="nav-link" href="{{ route('register') }}">Registro</a>
+                @endauth
             </div>
         </div>
     </nav>
