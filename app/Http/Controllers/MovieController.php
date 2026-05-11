@@ -2,57 +2,23 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use App\Models\Movie;
 
 class MovieController extends Controller
 {
-    private $movies = [
-        1 => [
-            'id' => 1,
-            'title' => 'Inception',
-            'year' => 2010,
-            'director' => 'Christopher Nolan',
-            'score' => 8.8
-        ],
-        2 => [
-            'id' => 2,
-            'title' => 'The Matrix',
-            'year' => 1999,
-            'director' => 'Wachowski Sisters',
-            'score' => 8.7
-        ],
-        3 => [
-            'id' => 3,
-            'title' => 'Interstellar',
-            'year' => 2014,
-            'director' => 'Christopher Nolan',
-            'score' => 7
-        ]
-    ];
 
-    public function index(Request $request)
+    public function index()
 {
-    $min = (float) $request->query('min', 0);
+    $movies = Movie::orderBy('score', 'desc')
+        ->paginate(10);
 
-    $movies = array_filter(
-        $this->movies,
-        function ($movie) use ($min) {
-            return $movie['score'] >= $min;
-        }
-    );
-
-    return view('movies.index', [
-        'movies' => $movies
-    ]);
+    return view('movies.index', compact('movies'));
 }
 
-    public function show($id)
-    {
-        if (!isset($this->movies[$id])) {
-            abort(404);
-        }
+   public function show($id)
+{
+    $movie = Movie::findOrFail($id);
 
-        return view('movies.show', [
-            'movie' => $this->movies[$id]
-        ]);
-    }
+    return view('movies.show', compact('movie'));
+}
 }

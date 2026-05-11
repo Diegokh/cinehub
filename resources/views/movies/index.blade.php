@@ -4,27 +4,36 @@
 
 @section('content')
 
-    <h1 class="mb-4">Películas</h1>
+<h1 class="mb-4">Películas</h1>
 
-    <div class="list-group">
+<div class="list-group">
 
-        @foreach ($movies as $movie)
-            <div class="list-group-item d-flex justify-content-between align-items-center">
+    @foreach($movies as $movie)
 
-                <span>
-                    {{ $movie['title'] }}
-                    <small class="text-muted">
-                        ({{ $movie['score'] }})
-                    </small>
-                </span>
+        <div class="list-group-item d-flex justify-content-between align-items-center">
 
-                <a href="/movies/{{ $movie['id'] }}" class="btn btn-sm btn-primary">
-                    Ver detalles
-                </a>
+            <div>
+                <h5>{{ $movie->title }}</h5>
 
+                <small>
+                    ⭐ {{ $movie->score }}
+                    · {{ $movie->director }}
+                </small>
             </div>
-        @endforeach
 
-    </div>
+            <a href="/movies/{{ $movie->id }}"
+               class="btn btn-primary btn-sm">
+                Ver detalles
+            </a>
+
+        </div>
+
+    @endforeach
+
+</div>
+
+<div class="mt-4">
+    {{ $movies->links() }}
+</div>
 
 @endsection
