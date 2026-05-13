@@ -12,6 +12,10 @@ Route::get('/hola', function () {
     return 'Hola soy Diego y estoy aprendiendo Laravel';
 });
 
+Route::get('/spa', function(){
+    return view('spa');
+});
+
 // Movies — lista pública
 Route::get('/movies', [MovieController::class, 'index']);
 
@@ -37,5 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';

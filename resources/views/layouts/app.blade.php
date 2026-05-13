@@ -36,6 +36,10 @@
 
     <!-- Content -->
     <main class="container py-4 flex-grow-1">
+        <button onclick="history.back()" class="btn btn-outline-secondary btn-sm mb-3">
+            ← Atrás
+        </button>
+
         @yield('content')
     </main>
 
