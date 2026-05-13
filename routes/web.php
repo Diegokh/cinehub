@@ -12,14 +12,20 @@ Route::get('/hola', function () {
     return 'Hola soy Diego y estoy aprendiendo Laravel';
 });
 
-// Movies CRUD
+// Movies — lista pública
 Route::get('/movies', [MovieController::class, 'index']);
-Route::get('/movies/create', [MovieController::class, 'create']);
-Route::post('/movies', [MovieController::class, 'store']);
+
+// Movies — solo admin (van ANTES que /movies/{id})
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/movies/create', [MovieController::class, 'create']);
+    Route::post('/movies', [MovieController::class, 'store']);
+    Route::get('/movies/{id}/edit', [MovieController::class, 'edit']);
+    Route::put('/movies/{id}', [MovieController::class, 'update']);
+    Route::delete('/movies/{id}', [MovieController::class, 'destroy']);
+});
+
+// Movies — show pública (debe ir AL FINAL para no capturar "create")
 Route::get('/movies/{id}', [MovieController::class, 'show']);
-Route::get('/movies/{id}/edit', [MovieController::class, 'edit']);
-Route::put('/movies/{id}', [MovieController::class, 'update']);
-Route::delete('/movies/{id}', [MovieController::class, 'destroy']);
 
 // Breeze
 Route::get('/dashboard', function () {

@@ -12,9 +12,13 @@
 
 <h1 class="mb-4">Películas</h1>
 
-<a href="/movies/create" class="btn btn-success mb-3">
-    + Añadir película
-</a>
+@auth
+    @if(auth()->user()->isAdmin())
+        <a href="/movies/create" class="btn btn-success mb-3">
+            + Añadir película
+        </a>
+    @endif
+@endauth
 
 <div class="list-group">
 
